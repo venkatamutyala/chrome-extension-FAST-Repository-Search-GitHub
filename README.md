@@ -5,7 +5,7 @@ Quickly search and access GitHub repositories across multiple organizations with
 ## Features
 
 - 🔍 **Fast Search**: Type to instantly filter repositories across all configured organizations
-- ⌨️ **Keyboard Shortcut**: Default `Ctrl+Shift+G` (customizable via `chrome://extensions/shortcuts`)
+- ⌨️ **Keyboard Shortcut**: Default `Alt+Shift+G` (customizable via `chrome://extensions/shortcuts`)
 - 🔐 **Optional Authentication**: Works unauthenticated (60 req/hour) or with a Personal Access Token (5000 req/hour)
 - ⚡ **Smart Caching**: Customizable cache duration (5 min to 24 hours) to minimize API calls
 - 🎨 **Clean UI**: GitHub-themed dark mode interface
@@ -21,7 +21,7 @@ Quickly search and access GitHub repositories across multiple organizations with
 
 ## Setup
 
-1. Click the extension icon or press `Ctrl+Shift+G` (or `Cmd+Shift+G` on Mac)
+1. Click the extension icon or press `Alt+Shift+G`
 2. Click "Open Settings" when prompted
 3. Enter your GitHub organization names (one per line)
 4. (Optional) Add a GitHub Personal Access Token for higher rate limits
@@ -33,7 +33,7 @@ Quickly search and access GitHub repositories across multiple organizations with
 ### Opening the Search
 
 - **Click**: Click the extension icon in the Chrome toolbar
-- **Keyboard**: Press `Ctrl+Shift+G` (or `Cmd+Shift+G` on Mac)
+- **Keyboard**: Press `Alt+Shift+G`
 - **Customize**: Visit `chrome://extensions/shortcuts` to change the keyboard shortcut
 
 ### Searching
@@ -70,7 +70,7 @@ Click "Clear Cache" in settings to force a refresh.
 
 | Key | Action |
 |-----|--------|
-| `Ctrl+Shift+G` (or `Cmd+Shift+G`) | Open search popup |
+| `Alt+Shift+G` | Open search popup |
 | `↑` / `↓` | Navigate through results |
 | `Enter` | Open selected repository |
 | `Esc` | Close popup |
@@ -87,7 +87,7 @@ The extension requires:
 
 1. Go to `chrome://extensions/shortcuts`
 2. Find "GitHub Repo Quick Search" in the list
-3. Check if a shortcut is assigned - if not, click the pencil icon and set `Ctrl+Shift+G` (or your preferred shortcut)
+3. Check if a shortcut is assigned - if not, click the pencil icon and set `Alt+Shift+G` (or your preferred shortcut)
 4. If another extension is using the same shortcut, you'll need to change one of them
 5. After setting the shortcut, try pressing it
 
