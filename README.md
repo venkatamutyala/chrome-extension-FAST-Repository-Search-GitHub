@@ -54,8 +54,8 @@ Enter organization names that match the GitHub URL format:
 ### Personal Access Token (Optional)
 
 For higher API rate limits, create a token at [github.com/settings/tokens](https://github.com/settings/tokens):
-- Only `public_repo` scope needed for public repositories
-- Add `repo` scope if you need access to private repositories
+- **For public repos only**: Select `public_repo` scope
+- **For private repos**: Select full `repo` scope (gives access to all public and private repos)
 
 ### Cache Duration
 
