@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Icon Generator - GitHub Repository Search</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 40px;
+      background: #0d1117;
+      color: #c9d1d9;
+    }
+    h1 { color: #58a6ff; }
+    button {
+      background: #238636;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      margin: 10px 5px;
+    }
+    button:hover { background: #2ea043; }
+    .preview { display: flex; gap: 20px; margin: 20px 0; }
+    .preview canvas { border: 2px solid #30363d; border-radius: 8px; }
+    .info { background: #161b22; padding: 20px; border-radius: 8px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h1>🎨 GitHub Repository Search - Icon Generator</h1>
+  <p>Click the button to generate and download professional icons for the extension.</p>
+  
+  <button onclick="generateIcons()">Generate & Download Icons</button>
+  
+  <div class="preview" id="preview"></div>
+  
+  <div class="info">
+    <h3>Icons Generated:</h3>
+    <ul>
+      <li><strong>icon16.png</strong> - 16x16px (toolbar icon)</li>
+      <li><strong>icon48.png</strong> - 48x48px (extension management)</li>
+      <li><strong>icon128.png</strong> - 128x128px (Chrome Web Store)</li>
+    </ul>
+    <p><em>After downloading, move the PNG files to the extension directory.</em></p>
+  </div>
+
+<script>
+function generateIcons() {
+  const preview = document.getElementById('preview');
+  preview.innerHTML = '';
+  
+  const sizes = [16, 48, 128];
+  
+  sizes.forEach(size => {
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    
+    // Draw the icon
+    drawIcon(ctx, size);
+    
+    // Add to preview
+    preview.appendChild(canvas);
+    
+    // Download
+    setTimeout(() => {
+      canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `icon${size}.png`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }, 100 * sizes.indexOf(size));
+  });
+}
+
+function drawIcon(ctx, size) {
+  // Background with rounded corners effect
+  ctx.fillStyle = '#0d1117';
+  ctx.fillRect(0, 0, size, size);
+  
+  // Gradient background
+  const gradient = ctx.createLinearGradient(0, 0, size, size);
+  gradient.addColorStop(0, '#1f2937');
+  gradient.addColorStop(1, '#111827');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, size, size);
+  
+  // Draw search icon elements
+  const centerX = size / 2;
+  const centerY = size / 2;
+  const scale = size / 128; // Scale based on 128px design
+  
+  // Main magnifying glass circle
+  ctx.strokeStyle = '#58a6ff';
+  ctx.lineWidth = Math.max(2, size / 16);
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  
+  const circleRadius = size * 0.25;
+  const circleX = centerX - size * 0.08;
+  const circleY = centerY - size * 0.08;
+  
+  ctx.beginPath();
+  ctx.arc(circleX, circleY, circleRadius, 0, 2 * Math.PI);
+  ctx.stroke();
+  
+  // Magnifying glass handle
+  const handleStartX = circleX + circleRadius * 0.7;
+  const handleStartY = circleY + circleRadius * 0.7;
+  const handleEndX = centerX + size * 0.25;
+  const handleEndY = centerY + size * 0.25;
+  
+  ctx.beginPath();
+  ctx.moveTo(handleStartX, handleStartY);
+  ctx.lineTo(handleEndX, handleEndY);
+  ctx.stroke();
+  
+  // GitHub mark (simplified)
+  if (size >= 48) {
+    ctx.fillStyle = '#58a6ff';
+    const markSize = size * 0.12;
+    const markX = centerX + size * 0.15;
+    const markY = centerY - size * 0.2;
+    
+    // Simple octagon/circle for GitHub mark
+    ctx.beginPath();
+    ctx.arc(markX, markY, markSize, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    // Inner detail
+    ctx.fillStyle = '#1f2937';
+    ctx.beginPath();
+    ctx.arc(markX, markY, markSize * 0.4, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+  
+  // Add subtle shine effect
+  const shineGradient = ctx.createRadialGradient(
+    centerX - size * 0.2, centerY - size * 0.2, 0,
+    centerX, centerY, size * 0.7
+  );
+  shineGradient.addColorStop(0, 'rgba(88, 166, 255, 0.2)');
+  shineGradient.addColorStop(1, 'rgba(88, 166, 255, 0)');
+  
+  ctx.fillStyle = shineGradient;
+  ctx.fillRect(0, 0, size, size);
+}
+
+// Auto-generate on load
+window.addEventListener('load', () => {
+  // Show preview without downloading
+  const preview = document.getElementById('preview');
+  [16, 48, 128].forEach(size => {
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    drawIcon(canvas.getContext('2d'), size);
+    preview.appendChild(canvas);
+  });
+});
+</script>
+</body>
+</html>

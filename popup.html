@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Repo Search</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔍 GitHub Repo Search</h1>
+      <button id="settingsBtn" class="settings-btn" title="Settings">⚙️</button>
+    </div>
+    
+    <div id="setupMessage" class="setup-message" style="display: none;">
+      <p>⚠️ Please configure your GitHub organizations in settings first.</p>
+      <button id="openSettingsBtn" class="primary-btn">Open Settings</button>
+    </div>
+
+    <div id="mainContent" style="display: none;">
+      <div class="search-box">
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Search repos (use multiple keywords like 'api frontend')..." 
+          autocomplete="off"
+          autofocus
+        />
+        <div class="status">
+          <span id="statusText" class="status-text"></span>
+          <span id="repoCount" class="repo-count"></span>
+        </div>
+      </div>
+
+      <div id="results" class="results"></div>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

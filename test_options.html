@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test Options</title></head>
+<body>
+<h1>Testing Options Page</h1>
+<button id="testBtn">Click to test chrome.storage</button>
+<div id="output"></div>
+<script>
+document.getElementById('testBtn').addEventListener('click', async () => {
+  const output = document.getElementById('output');
+  try {
+    // Test write
+    await chrome.storage.sync.set({ test: 'hello' });
+    output.innerHTML = '<p style="color: green;">✓ chrome.storage.sync.set works</p>';
+    
+    // Test read
+    const result = await chrome.storage.sync.get('test');
+    output.innerHTML += `<p style="color: green;">✓ chrome.storage.sync.get works: ${result.test}</p>`;
+  } catch (error) {
+    output.innerHTML = `<p style="color: red;">✗ Error: ${error.message}</p>`;
+  }
+});
+</script>
+</body>
+</html>
