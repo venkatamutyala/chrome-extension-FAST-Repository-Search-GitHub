@@ -235,19 +235,42 @@ function renderResults() {
     return;
   }
   
-  results.innerHTML = filteredRepos.map((repo, index) => `
-    <div class="repo-item" data-index="${index}">
-      <div class="repo-name">${escapeHtml(repo.name)}</div>
-      <div class="repo-org">${escapeHtml(repo.org)}/${escapeHtml(repo.name)}</div>
-      ${repo.description ? `<div class="repo-description">${escapeHtml(repo.description)}</div>` : ''}
-    </div>
-  `).join('');
+  results.innerHTML = filteredRepos.map((repo, index) => {
+    const shortcutBadge = index < 9 ? `<span class="shortcut-key">${index + 1}</span>` : '';
+    const cloneCommand = `gh repo clone ${repo.fullName}`;
+    return `
+      <div class="repo-item" data-index="${index}">
+        <div class="repo-header">
+          ${shortcutBadge}
+          <div class="repo-info">
+            <div class="repo-name">${escapeHtml(repo.name)}</div>
+            <div class="repo-org">${escapeHtml(repo.org)}/${escapeHtml(repo.name)}</div>
+          </div>
+          <button class="copy-btn" data-command="${escapeHtml(cloneCommand)}" title="Copy clone command">
+            <span class="copy-text">Clone</span>
+          </button>
+        </div>
+        ${repo.description ? `<div class="repo-description">${escapeHtml(repo.description)}</div>` : ''}
+      </div>
+    `;
+  }).join('');
   
-  // Add click handlers
+  // Add click handlers for repo items
   document.querySelectorAll('.repo-item').forEach(item => {
-    item.addEventListener('click', () => {
+    item.addEventListener('click', (e) => {
+      // Don't open repo if clicking the copy button
+      if (e.target.closest('.copy-btn')) return;
       const index = parseInt(item.dataset.index);
       openRepo(filteredRepos[index]);
+    });
+  });
+  
+  // Add click handlers for copy buttons
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const command = btn.dataset.command;
+      copyToClipboard(command, btn);
     });
   });
 }
@@ -268,6 +291,23 @@ function updateSelection() {
 function openRepo(repo) {
   chrome.tabs.create({ url: repo.url });
   window.close();
+}
+
+// Copy command to clipboard with feedback
+function copyToClipboard(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const copyText = btn.querySelector('.copy-text');
+    const originalText = copyText.textContent;
+    copyText.textContent = 'Copied!';
+    btn.classList.add('copied');
+    
+    setTimeout(() => {
+      copyText.textContent = originalText;
+      btn.classList.remove('copied');
+    }, 1500);
+  }).catch(err => {
+    console.error('Failed to copy:', err);
+  });
 }
 
 // Set status message
@@ -328,6 +368,13 @@ function setupEventListeners() {
     } else if (e.key === 'Enter' && selectedIndex >= 0) {
       e.preventDefault();
       openRepo(filteredRepos[selectedIndex]);
+    } else if (e.key >= '1' && e.key <= '9') {
+      const keyIndex = parseInt(e.key) - 1;
+      if (keyIndex < filteredRepos.length) {
+        e.preventDefault();
+        selectedIndex = keyIndex;
+        updateSelection();
+      }
     }
   });
 }

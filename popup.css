@@ -206,3 +206,70 @@ body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+/* Repo header with shortcut and copy button */
+.repo-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.repo-info {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Shortcut key badge */
+.shortcut-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  background: #30363d;
+  border: 1px solid #484f58;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #8b949e;
+  flex-shrink: 0;
+}
+
+.repo-item:hover .shortcut-key,
+.repo-item.selected .shortcut-key {
+  background: #484f58;
+  color: #c9d1d9;
+}
+
+/* Copy clone command button */
+.copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: #21262d;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #8b949e;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.copy-btn:hover {
+  background: #30363d;
+  border-color: #484f58;
+  color: #c9d1d9;
+}
+
+.copy-btn.copied {
+  background: #238636;
+  border-color: #2ea043;
+  color: #ffffff;
+}
+
+.copy-text {
+  font-weight: 500;
+}
