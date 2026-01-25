@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "🏎️💨🔥 FAST Repository Search (GitHub)",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "Quickly search and access GitHub repositories across multiple organizations",
   "permissions": [
     "storage"
